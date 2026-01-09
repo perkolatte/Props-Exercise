@@ -53,17 +53,32 @@ function App() {
     },
     { id: 10, name: "Thruster Fuel", type: "Fuel", quantity: 50, price: 45.0 },
   ];
+  // Group items once for type sections.
+  const itemsByType = inventoryItems.reduce((groups, item) => {
+    if (!groups[item.type]) {
+      groups[item.type] = [];
+    }
+    groups[item.type].push(item);
+    return groups;
+  }, {});
 
   return (
     <>
       <h1>Inventory</h1>
-      <ol>
-        {inventoryItems.map((item) => (
-          <li key={item.id} value={item.id}>
-            <InventoryItem {...item} />
-          </li>
-        ))}
-      </ol>
+      {Object.entries(itemsByType).map(([type, items]) => (
+        <section key={type}>
+          <h2>{type}</h2>
+          <ul>
+            {items.map((item) => (
+              <li key={item.id}>
+                {/* Use inline ID label since list markers are not customized. */}
+                <span>ID: {item.id} </span>
+                <InventoryItem {...item} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </>
   );
 }

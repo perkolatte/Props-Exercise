@@ -2,21 +2,21 @@ function InventoryItem({
   name = "unknown",
   type = "unknown",
   quantity = 0,
-  price = "unknown",
+  price = 0,
 }) {
   return (
     <>
-      <h2>
-        {name} ({type})
-      </h2>
+      <h2>{name}</h2>
       <p>
-        {quantity <= 5 ? <Message>⚠️ Low stock! </Message> : null}
-        {`${quantity} remained.`}
+        {/* Low-stock alert shown inline with remaining count. */}
+        {quantity <= 5 && <Message>⚠️ Low stock! </Message>}
+        {`${quantity} remaining.`}
       </p>
       <p>
-        {price * quantity >= 1000 ? (
+        {/* High-value warning based on total item value. */}
+        {price * quantity >= 1000 && (
           <Message>💰 High value - consider extra protection!</Message>
-        ) : null}
+        )}
       </p>
     </>
   );
